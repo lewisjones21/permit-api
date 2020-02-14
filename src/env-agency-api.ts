@@ -8,8 +8,6 @@ export default class EnvAgencyAPI extends PermitAPI {
     }
     getRawApplications(): Promise<any[]> {
         console.log("Getting raw applications from " + this.name + " API");
-        return new Promise((resolve) => setTimeout(() => resolve([ {
-            "description": "Permit application from " + this.name
-        } ]), 100));
+        return new Promise((resolve) => resolve([]));
     }
 }

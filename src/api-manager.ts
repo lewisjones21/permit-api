@@ -15,10 +15,14 @@ export default class APIManager {
         let sources: string[] = [],
             applications: any[] = [];
         await Promise.all(this.apiList.map(async(api):Promise<any> => {
-            sources = [ ...sources, api.getApplicationSource() ];
             await api.getApplications().then((newApplications: any[]) => {
-                console.log("Got new applications: " + JSON.stringify(newApplications));
+                console.log("Got " + newApplications.length + " new applications from " + api.name);
                 applications = [ ...applications, ...newApplications ];
+                if (newApplications.length > 0) {
+                    sources = [ ...sources, api.getApplicationSource() ];
+                }
+            }).catch((error: Error) => {
+                console.log(error);
             });
         }));
         return { sources, applications };
