@@ -11,15 +11,16 @@ export default class APIManager {
             new PlanitAPI()
         ];
     }
-    getData() {
+    async getData() {
         let sources: string[] = [],
             applications: any[] = [];
-        this.apiList.forEach(
-            (api) => {
-                sources = [ ...sources, api.getApplicationSource() ];
-                applications = [ ...applications, ...api.getApplications() ];
-            }
-        );
+        await Promise.all(this.apiList.map(async(api):Promise<any> => {
+            sources = [ ...sources, api.getApplicationSource() ];
+            await api.getApplications().then((newApplications: any[]) => {
+                console.log("Got new applications: " + JSON.stringify(newApplications));
+                applications = [ ...applications, ...newApplications ];
+            });
+        }));
         return { sources, applications };
     }
 }

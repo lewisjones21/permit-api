@@ -10,19 +10,20 @@ export default class PermitAPI {
     getApplicationSource(): string {
         return this.name;
     }
-    getApplications(): any[] {
-        const applications: any[] = this.getRawApplications();
-        applications.forEach(
-            (application) => {
-                application.source = this.getApplicationSource();
-            }
-        );
-        return applications;
+    getApplications(): Promise<any[]> {
+        return this.getRawApplications().then((rawApplications) => {
+            rawApplications.forEach(
+                (application) => {
+                    application.source = this.getApplicationSource();
+                }
+            );
+            return rawApplications;
+        });
     }
-    getRawApplications(): any[] {
+    getRawApplications(): Promise<any[]> {
         console.log("Getting raw applications from " + this.name + " API");
-        return [ {
+        return new Promise((resolve) => resolve([ {
             "description": "Abstract Permit API application; this should not appear in production"
-        } ];
+        } ]));
     }
 }
