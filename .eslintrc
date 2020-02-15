@@ -162,7 +162,7 @@
         "array-element-newline": "off",
         "block-spacing": "error",
         "brace-style": "error",
-        "camelcase": "error",
+        "camelcase": "off",
         "capitalized-comments": "error",
         "comma-dangle": "error",
         "comma-spacing": "error",
